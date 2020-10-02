@@ -1,4 +1,4 @@
-package com.liga.lesson_02;
+package task_dead_lock;
 
 public class DeadLock {
 

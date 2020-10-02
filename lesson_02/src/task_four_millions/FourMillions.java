@@ -1,4 +1,4 @@
-package com.liga.lesson_02.task_four_millions;
+package task_four_millions;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
