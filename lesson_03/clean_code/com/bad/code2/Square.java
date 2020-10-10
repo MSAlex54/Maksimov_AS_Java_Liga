@@ -25,8 +25,9 @@ public class Square implements Shape2D {
 
     /**
      * Конструктор фигуры
-     * @param centerX координаты по оси X
-     * @param centerY координаты по оси Y
+     *
+     * @param centerX  координаты по оси X
+     * @param centerY  координаты по оси Y
      * @param edgeSize размер ребра
      */
     public Square(Double centerX, Double centerY, Double edgeSize) {
@@ -52,6 +53,7 @@ public class Square implements Shape2D {
 
     /**
      * Вычисление периметра фигуры
+     *
      * @return Периметр
      */
     @Override

@@ -2,46 +2,50 @@ package task_dead_lock;
 
 public class DeadLock {
 
-  static class Friend {
-    private final String name;
+    static class Friend {
+        private final String name;
 
-    public Friend(String name) {
-      this.name = name;
-    }
+        public Friend(String name) {
+            this.name = name;
+        }
 
-    public String getName() {
-      return name;
-    }
+        public String getName() {
+            return name;
+        }
 
-    public synchronized void bow(Friend bower) {
-      System.out.format("%s: %s подстрелил меня!\n", this.name, bower.getName());
-      System.out.format("%s: стреляю в ответ!\n", this.name);
-      bower.bowBack(this);
+        public void bow(Friend bower) {
+            synchronized (this) {
+                System.out.format("%s: %s пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ!\n", this.name, bower.getName());
+                System.out.format("%s: пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ!\n", this.name);
+            }
+            bower.bowBack(this);
+        }
+
+        /**
+         * пїЅпїЅпїЅпїЅпїЅпїЅпїЅ:
+         * пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅ "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ". пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ,
+         * пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
+         * пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ. пїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+         * пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ.
+         */
+        public void bowBack(Friend bower) {
+            synchronized (this) {
+                System.out.format("%s: %s пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ!\n", this.name, bower.getName());
+            }
+        }
     }
 
     /**
-     * Решение:
-     * В процессе гуглинга наткнулся на слов "реентерабельность". Если я правильно понял,
-     * то когда у нас оба метода синхронизированы, то поток получает вторую блокировку объекта в котором вызван метод
-     * без проверки заблокирован ли он другим потоком. В итоге каждый из потоков дважды блокирует свой объект
-     * и пытается получить второй объект, который также заблокирован дважды.
+     * пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+     *
+     * @param args пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
      */
-    public void bowBack(Friend bower) {
-      System.out.format("%s: %s подстрелил меня!\n", this.name, bower.getName());
+    public static void main(String[] args) {
+        Friend alphonse = new Friend("Alphonse");
+        Friend gaston = new Friend("Gaston");
+
+        new Thread(() -> alphonse.bow(gaston)).start();
+        new Thread(() -> gaston.bow(alphonse)).start();
     }
-  }
-
-  /**
-   * Точка входа в программу
-   *
-   * @param args аргументы командной строки
-   */
-  public static void main(String[] args) {
-    Friend alphonse = new Friend("Alphonse");
-    Friend gaston = new Friend("Gaston");
-
-    new Thread(() -> alphonse.bow(gaston)).start();
-    new Thread(() -> gaston.bow(alphonse)).start();
-  }
 }
 

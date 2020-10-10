@@ -27,9 +27,10 @@ public class Qube implements Shape3D {
 
     /**
      * Конструктор фигуры
-     * @param centerX координаты по оси X
-     * @param centerY координаты по оси Y
-     * @param centerZ координаты по оси Z
+     *
+     * @param centerX  координаты по оси X
+     * @param centerY  координаты по оси Y
+     * @param centerZ  координаты по оси Z
      * @param edgeSize размер ребра
      */
     public Qube(Double centerX, Double centerY, Double centerZ, Double edgeSize) {
@@ -56,6 +57,7 @@ public class Qube implements Shape3D {
 
     /**
      * Расчёт объема куба
+     *
      * @return объем куба
      */
     @Override
