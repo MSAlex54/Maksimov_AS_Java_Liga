@@ -4,9 +4,7 @@ import com.liga.home_work.dao.OrderDAO;
 import com.liga.home_work.entitty.Order;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;

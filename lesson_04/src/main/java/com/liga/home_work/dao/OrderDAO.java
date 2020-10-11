@@ -6,7 +6,6 @@ import com.liga.home_work.entitty.Order;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;
-import java.util.Collection;
 import java.util.List;
 
 public interface OrderDAO {
