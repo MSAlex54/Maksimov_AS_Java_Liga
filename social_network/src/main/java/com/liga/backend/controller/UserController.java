@@ -16,8 +16,12 @@ import java.util.UUID;
 @RequestMapping("/api/")
 public class UserController {
 
+    private final UserService userService;
+
     @Autowired
-    UserService userService;
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     @RequestMapping(value = "users", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)

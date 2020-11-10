@@ -20,8 +20,13 @@ import java.util.stream.Collectors;
 @Service
 public class UserService {
 
+    private final UserRepository repository;
+
     @Autowired
-    UserRepository repository;
+    public UserService(UserRepository repository) {
+        this.repository = repository;
+    }
+
 
     public UserEditDto createUser(UserRegistrationDto dto) {
         User entity = toEntityFromUserRegistrationDto(dto);
@@ -37,7 +42,6 @@ public class UserService {
         return toEditDto(repository.getUserById(id));
     }
 
-
     public void deleteUser(UUID id) {
         repository.deleteById(id);
     }
@@ -46,11 +50,12 @@ public class UserService {
         User user = repository.getUserById(friendship.getUserUUID());
         Set<User> newFriends = repository.findUserByIdList(Arrays.asList(friendship.getFriendsUUIDs()));
         user.getFriends().addAll(newFriends);
-        repository.save(user);
+
         newFriends.stream().forEach(u -> {
             u.getFriendOfs().add(user);
             repository.save(u);
         });
+        repository.save(user);
     }
 
     public void deleteFriends(Friendship friendship) {

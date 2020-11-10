@@ -21,10 +21,16 @@ public interface UserRepository extends CrudRepository<User, UUID>, JpaSpecifica
     Set<User> findUserByIdList(@Param("ids") Collection<UUID> ids);
 
     Set<User> findAllByFirstNameLike(String firstName);
+
     Set<User> findAllByLastNameLike(String lastName);
+
     Set<User> findAllByFirstNameLikeAndLastNameLike(String firstName, String lastName);
+
     Set<User> findAllByFirstNameLikeAndLastNameLikeAndBirthDayIsBetween(String firstName, String lastName, LocalDate localDate, LocalDate date);
+
     Set<User> findAllByFirstNameLikeAndBirthDayIsBetween(String firstName, LocalDate minusYears, LocalDate minusYears1);
+
     Set<User> findAllByLastNameLikeAndBirthDayIsBetween(String lastName, LocalDate minusYears, LocalDate minusYears1);
+
     Set<User> findAllByBirthDayIsBetween(LocalDate minusYears, LocalDate minusYears1);
 }

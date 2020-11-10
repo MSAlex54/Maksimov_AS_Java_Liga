@@ -26,4 +26,3 @@ CREATE TABLE public.friends
         ON DELETE NO ACTION
         NOT VALID
 );
-

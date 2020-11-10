@@ -1,9 +1,6 @@
 package com.liga.backend.domain.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
@@ -36,8 +33,10 @@ public class UserEditDto {
 
     private String city;
 
-    private Set<UUID> friends;
+    private @Singular
+    Set<UUID> friends;
 
-    private Set<UUID> friendOfs;
+    private @Singular
+    Set<UUID> friendOfs;
 
 }
