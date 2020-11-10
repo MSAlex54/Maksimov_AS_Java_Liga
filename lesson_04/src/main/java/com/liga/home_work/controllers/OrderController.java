@@ -21,17 +21,17 @@ public class OrderController {
         this.customerService = customerService;
     }
 
-    @PostMapping("/api/v1/order")
+    @PostMapping("/api/order")
     public Order createOrder(Order order){
         Customer customer = customerService.getCustomer(1);
-        if (order==null) {
-            order = new Order(5,"Fifth Order", 130, customer.getId());
-        }
+//        if (order==null) {
+//            order = new Order(5,"Fifth Order", 130, customer.getId());
+//        }
         orderService.createOrder(order);
         return order;
     }
 
-    @GetMapping("/api/v1/order")
+    @GetMapping("/api/order")
     public Order getOrder(){
         return orderService.getOrder(1);
     }
