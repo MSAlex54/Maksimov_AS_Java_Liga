@@ -90,7 +90,7 @@ class UserControllerTest {
     @Test
     void search() throws Exception {
         when(service.findUsersByParam(any(), any(), any())).thenReturn(Collections.singleton(listDto));
-        mockMvc.perform(get("/api//search")
+        mockMvc.perform(get("/api/search")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(content().json(mapper.writeValueAsString(Collections.singleton(listDto))))
                 .andExpect(status().isOk());

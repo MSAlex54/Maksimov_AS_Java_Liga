@@ -1,5 +1,6 @@
 package com.liga.backend.service;
 
+import com.liga.backend.domain.dto.Friendship;
 import com.liga.backend.domain.dto.UserEditDto;
 import com.liga.backend.domain.dto.UserRegistrationDto;
 import com.liga.backend.domain.entity.User;
@@ -7,13 +8,14 @@ import com.liga.backend.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 class UserServiceTest {
 
@@ -73,18 +75,20 @@ class UserServiceTest {
 
     @Test
     void deleteUser() {
-
+        userService.deleteUser(UUID.randomUUID());
+        verify(userRepository, atLeastOnce()).save(any());
     }
 
     @Test
     void addFriends() {
-//        when(userRepository.getUserById(any())).thenReturn(entity);
-//        when(userRepository.findUserByIdList(any())).thenReturn(new HashSet<User>(Arrays.asList(entity)));
-//        when(userRepository.save(any())).thenReturn(entity);
-//        userService.addFriends(new Friendship(UUID.randomUUID(), new UUID[]{UUID.randomUUID()}));
-//        assertThat(entity.getFriends().containsAll(entity.getFriendOfs()));
-//        assertThat(entity.getFriends()).isNotNull();
-//        assertThat(entity.getFriendOfs()).isNotNull();
+        when(userRepository.getUserById(any())).thenReturn(entity);
+        when(userRepository.findUserByIdList(any())).thenReturn(new HashSet<User>(Arrays.asList(entity)));
+        when(userRepository.save(any())).thenReturn(entity);
+        userService.addFriends(new Friendship(UUID.randomUUID(), new UUID[]{UUID.randomUUID()}));
+        assertThat(entity.getFriends().containsAll(entity.getFriendOfs()));
+        assertThat(entity.getFriends()).isNotNull();
+        assertThat(entity.getFriendOfs()).isNotNull();
+        verify(userRepository, atLeastOnce()).save(any());
     }
 
     @Test

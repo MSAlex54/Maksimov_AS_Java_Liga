@@ -5,27 +5,29 @@ import com.liga.backend.domain.dto.UserEditDto;
 import com.liga.backend.domain.dto.UserListDto;
 import com.liga.backend.domain.dto.UserRegistrationDto;
 import com.liga.backend.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Set;
 import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/")
+@RequiredArgsConstructor
 public class UserController {
 
     private final UserService userService;
-
-    @Autowired
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
+//
+//    @Autowired
+//    public UserController(UserService userService) {
+//        this.userService = userService;
+//    }
 
     @RequestMapping(value = "users", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
-    public UserEditDto createUser(@RequestBody UserRegistrationDto user) {
+    public UserEditDto createUser(@RequestBody @Valid UserRegistrationDto user) {
         UserEditDto createdUser = this.userService.createUser(user);
         return createdUser;
     }

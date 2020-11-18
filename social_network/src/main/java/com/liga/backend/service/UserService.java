@@ -8,6 +8,7 @@ import com.liga.backend.domain.entity.User;
 import com.liga.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.Period;
@@ -18,6 +19,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional(readOnly = true)
 public class UserService {
 
     private final UserRepository repository;
@@ -28,11 +30,13 @@ public class UserService {
     }
 
 
+    @Transactional
     public UserEditDto createUser(UserRegistrationDto dto) {
         User entity = toEntityFromUserRegistrationDto(dto);
         return toEditDto(repository.save(entity));
     }
 
+    @Transactional
     public UserEditDto updateUser(UserEditDto dto) {
         User entity = toEntity(dto);
         return toEditDto(repository.save(entity));
@@ -42,10 +46,12 @@ public class UserService {
         return toEditDto(repository.getUserById(id));
     }
 
+    @Transactional
     public void deleteUser(UUID id) {
         repository.deleteById(id);
     }
 
+    @Transactional
     public void addFriends(Friendship friendship) {
         User user = repository.getUserById(friendship.getUserUUID());
         Set<User> newFriends = repository.findUserByIdList(Arrays.asList(friendship.getFriendsUUIDs()));
@@ -58,6 +64,7 @@ public class UserService {
         repository.save(user);
     }
 
+    @Transactional
     public void deleteFriends(Friendship friendship) {
         User user = repository.getUserById(friendship.getUserUUID());
         Set<User> notFriends = repository.findUserByIdList(Arrays.asList(friendship.getFriendsUUIDs()));
